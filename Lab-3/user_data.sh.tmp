@@ -1,0 +1,14 @@
+#!/bin/bash
+
+yum -y install httpd
+
+cat <<EOF > /var/www/html/index.html
+<h1> This page is built by terraform and create by 
+Team Leader Name is : ${name} ${surename}
+
+%{ for members in team_member }
+Helle the team members are ${members}
+%{ endfor }
+</h1>
+EOF
+systemctl enable --now httpd
