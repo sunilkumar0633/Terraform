@@ -1,3 +1,4 @@
+
 variable "aws_region" {
   description = "AWS region for the VPC"
   type        = string
@@ -16,13 +17,30 @@ variable "public_subnet_cidr" {
   default     = "10.0.0.0/18"
 }
 
-variable "private_subnet_cidrs" {
-  description = "CIDR blocks for private subnets"
-  type        = map(string)
+variable "public_az" {
+  description = "Availability Zone for the public subnet"
+  type        = string
+  default     = "ap-south-1a"
+}
+
+variable "private_subnets" {
+  description = "Private subnet configuration by Availability Zone"
+
+  type = map(object({
+    cidr_block        = string
+    availability_zone = string
+  }))
 
   default = {
-    private_1 = "10.0.64.0/18"
-    private_2 = "10.0.128.0/18"
+    private_1 = {
+      cidr_block        = "10.0.64.0/18"
+      availability_zone = "ap-south-1a"
+    }
+
+    private_2 = {
+      cidr_block        = "10.0.128.0/18"
+      availability_zone = "ap-south-1b"
+    }
   }
 }
 
